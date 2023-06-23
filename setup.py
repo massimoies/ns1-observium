@@ -16,7 +16,7 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-exec(open('NsoneObservium/_version.py').read())
+__version__ = open('NsoneObservium/_version.py').read().split("=")[1].strip().replace("'", "")
 
 setup(
     name='NsoneObservium',  # Required
@@ -32,14 +32,8 @@ setup(
         'Intended Audience :: System Administrators',
         'Topic :: System :: Networking :: Monitoring',
         'License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3'
     ],
-
     keywords='observium network automation',  # Optional
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
     install_requires=['requests', 'urllib3'],  # Optional

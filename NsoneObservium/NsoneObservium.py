@@ -73,6 +73,22 @@ class NsoneObservium:
                 setattr(NsoneObservium, "%s_%s" % (action, endpoint['name']),
                         _nsone_observium_make_method(endpoint, action, maps))
 
+    # easy add, quick and safe. It could be re-written to integrate in centralized method
+    def get_entity(self, type_, id_):
+        req_url = '%s/entity/%s/%s' % (self._observium_api_base_url, type_, id_)
+        response = requests.get(req_url,
+                                auth=(self._observium_user, self._observium_pass),
+                                timeout=self._timeout,
+                                verify=self._ssl_verify)
+        if response.ok:
+            results = response.json()
+            if 'entity' in results:
+                results['entity'] = {
+                    results['entity']['entity_id']: results['entity']
+                }
+                results['count'] = results.get('count', 1)
+            return results
+
 
 def _nsone_observium_make_method(endpoint, action, maps):
     def _method(self, param_dict={}):
